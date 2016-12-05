@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular Rest Create</title>
+    <!--Using a content delivery network - watch if they go down so does your site-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+</head>
+<body data-ng-app>
+    <form data-ng-submit="submit()" data-ng-controller="Ctrl">
+        <p>ID: <input data-ng-model="fldUserNo" /></p>
+        <p> Display Name: <input data-ng-model="fldDisplayName" /></p>
+        <p>First Name: <input data-ng-model="fldFName" /></p>
+        <p>Last Name: <input data-ng-model="fldLName" /></p>
+        <p>Gender <input data-ng-model="fldGender" /></p>       
+        <p>City <input data-ng-model="fldCity" /></p>
+        <p>State or Province <input data-ng-model="fldStateProvince" /></p>
+        <p>Country: <input data-ng-model="fldCountry" /></p>
+        <p>Email : <input data-ng-model="fldUserEmail" /></p>
+        <p><input type="submit" id="submit" value="Submit" /></p>
+        <p>Response: {{ response }}</p>
+    </form>
+</body>
+<script>
+    function Ctrl($scope) {
+        $scope.submit = function () {
+            //Make sure to change the host and port to match the URL 
+            var query = "http://localhost:3717/RESTService.svc/Read?";
+            query += "fldUserNo=" + $scope.fldUserNo;
+            $.ajax({ url: query, crossDomain: true, dataType: 'json', type: 'GET' })
+                .done(function (json) {
+                    $scope.fldUserNo = json.fldUserNo;
+                    $scope.fldDisplayName = json.fldDisplayName;
+                    $scope.fldFName = json.fldFName;
+                    $scope.fldGender = json.fldGender;
+                    $scope.fldCity = json.fldCity;
+                    $scope.fldStateProvince = json.fldStateProvince;
+                    $scope.fldCountry = json.fldCountry;
+                    $scope.fldStateProvince = json.fldStateProvince;
+                    $scope.fldUserEmail = json.fldUserEmail;
+                    $scope.$apply();
+                })
+                .fail(function () {
+                    alert("Error");
+                });
+        }
+    }
+</script>
+</html>
+

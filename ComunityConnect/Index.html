@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-ng-app="mainApp">
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <script src="angular-route.js"></script>
+    <script src="angular.js"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="this is a gaming site">
+    <meta name="author" content="IST 420 group 7">
+    <link rel="icon" href="css/favicon.icon">
+
+    <title>Community Connect</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- Theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Home</a>
+                <a class="navbar-brand" href="#AddGuest">Add Guest</a>
+                <a class="navbar-brand" href="#readEvent">See Events</a>
+                <a class="navbar-brand" href="#CreateUser">Sign Up</a>
+             
+                <a class="navbar-brand" href="#Login">Login</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+            </div>
+            <!--/.navbar-collapse
+            -->
+        </div>
+    </nav>
+
+</head>
+
+<body>
+    <div>
+        </br>
+        </br>
+        </br>
+        </br>
+        <center> <div data-ng-view></div></center>
+        </br>
+        </br>
+        </br>
+        </br>
+    </div>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Community Connect</h1>
+            <p>Find a friend who is interested in the same things you are.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button"> Search Events &raquo;</a></p>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+
+        <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+
+        <script>
+            var mainApp = angular.module('mainApp', ['ngRoute']);
+            mainApp.config(function ($routeProvider) {
+                $routeProvider
+               .when('/',
+                {
+                    controller: 'readEventCntrl',
+                    templateUrl: 'home.html' //  folder_name/file name
+                })
+
+                .when('/readEvent',
+                {
+                    controller: 'readEventCntrl',
+                    templateUrl: 'Read/ReadAllEvents.html' //  folder_name/file name
+                })
+
+                    .when('/CreateUser',
+                {
+                    controller: 'createUserCtrl',
+                    templateUrl: 'Create/CreateUser.html' //  folder_name/file name
+                })
+                    .when('/AddGuest',
+                {
+                    controller: 'guestCreateCntrl',
+                    templateUrl: 'guestCreate.html' //  folder_name/file name
+                })
+                .otherwise({ redirectTo: '/' })
+
+            });
+
+            mainApp.controller('createUserCtrl', function ($scope) {
+                $scope.submit = function () {
+                    //Make sure to change the host and port to match the URL
+                    var query = "http://localhost:3717/RESTService.svc/CreateUser";
+                    var CCtblUser = {
+                        fldFName: $scope.fldFName,
+                        fldLName: $scope.fldLName,
+                        fldDisplayName: $scope.fldDisplayName,
+                        fldStateProvince: $scope.fldStateProvince,
+                        fldUserEmail: $scope.fldUserEmail,
+                        fldCountry: $scope.fldCountry,
+                        fldCity: $scope.fldCity,
+                        //fldJoinDate: $scope.JoinDate,
+                        //fldGender: $scope.Gender,
+                        //fldIsActive: $scope.IsActive
+
+                    };
+                    $.ajax({
+                        url: query,
+                        contentType: "application/json; charset=utf-8",
+                        crossDomain: true,
+                        data: JSON.stringify(CCtblUser),
+                        dataType: 'json',
+                        processData: true,
+                        type: 'POST'
+                    })
+                    .done(function (json) {
+                        $scope.response = json;
+                        $scope.$apply();
+                    })
+                    .fail(function () {
+                        alert("Error");
+                    });
+                }
+            })
+            
+
+            mainApp.controller('guestCreateCntrl', function ($scope) {
+
+                $scope.submit = function () {
+                    //Make sure to change the host and port to match the URL
+                    var query = "http://localhost:3717/RESTService.svc/CreateGuest";
+                    var CCtblGuestLookUp = {
+
+                        fldEventNoFK: $scope.fldEventNoFK,
+                        fldUserNoFK: $scope.fldUserNoFK
+
+                    };
+                    $.ajax({
+                        url: query,
+                        contentType: "application/json; charset=utf-8",
+                        crossDomain: true,
+                        data: JSON.stringify(CCtblGuestLookUp),
+                        dataType: 'json',
+                        processData: true,
+                        type: 'POST'
+                    })
+                    .done(function (json) {
+                        $scope.response = json;
+                        $scope.$apply();
+                    })
+                    .fail(function () {
+                        alert("Error");
+                    });
+                }
+            }
+            )
+            mainApp.controller('readEventCntrl', function ($scope) {
+                $scope.submit = function () {
+                    //Make sure to change the host and port to match the URL
+                    var query = "http://localhost:3717/RESTService.svc/ReadAllEvents";
+                    $.ajax({ url: query, crossDomain: true, dataType: 'json', type: 'GET' })
+                        .done(function (json) {
+                            $scope.events = json;
+                            $scope.$apply();
+                        })
+                        .fail(function () {
+                            alert("Error");
+                        });
+                }
+            })
+
+        </script>
+        <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+        <!-- Example row of columns -->
+        <div id="home" class="row">
+            <div class="col-md-4">
+                <h2>Current Events</h2>
+                <p>Newsfeed of events going on present and future.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Twitter API</h2>
+                <p>Trending tweets from active users.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Suggested Events</h2>
+                <p>Events we want you to consider going, regardless of the comfort zone.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+
+        <!--Review-->
+        <div id="review" class="row">
+            <div class="col-md-4">
+                <h2>5 Star Events</h2>
+                <p>Everyone has had a great time at this event and event holders reputation is perfect for connections.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Average Event</h2>
+                <p>Events where everyone had a decent time.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Poor Experience</h2>
+                <p>Events that others try to avoid.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+
+        <!--Search-->
+        <div id="search" class="row">
+            <div class="col-md-4">
+                <h2>Followed Event Holders</h2>
+                <p>inputting events of my interest</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>New interest</h2>
+                <p>Inputting events that I am not following but may enjoy</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Special Events</h2>
+                <p>inputting special events</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+
+
+        <!--Points-->
+        <div id="points" class="row">
+            <div class="col-md-4">
+                <h2>Points</h2>
+                <p>You progress is shown here</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Goals</h2>
+                <p>Younhave so many points until new daily high score.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Rewards</h2>
+                <p>You can redeem these after so many more points, go connect.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+        <hr>
+
+        <footer>
+            <p>&copy; Communiy Connect 2015</p>
+        </footer>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+        $("#home").click(function () {
+            $("#review")
+        })
+
+    </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+ Optional theme
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">-->

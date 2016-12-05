@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular Rest Read All</title>
+    <!--Using a content delivery network - watch if they go down so
+    does your site-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+</head>
+<body data-ng-app>
+    <form data-ng-submit="submit()" data-ng-controller="Ctrl">
+        <p data-ng-repeat="event in events">
+            Event ID: {{ event.fldEventNo }}
+            Event Name: {{ event.fldEventName }}
+            Event Location: {{ event.fldEventLocation }}
+
+        </p>
+        <p><input type="submit" id="submit" value="Submit" /></p>
+</body>
+<script>
+    function Ctrl($scope) {
+        $scope.submit = function () {
+            //Make sure to change the host and port to match the URL
+            var query = "http://localhost:3717/RESTService.svc/ReadAllEvents";
+            $.ajax({ url: query, crossDomain: true,  dataType: 'json',type: 'GET' })
+                .done(function (json) {
+                    $scope.events = json;
+                    $scope.$apply();
+                })
+                .fail(function () {
+                    alert("Error");
+                });
+        }
+    }
+</script>
+</html>

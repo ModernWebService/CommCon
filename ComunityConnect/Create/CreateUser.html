@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular Rest Create</title>
+    <!--Using a content delivery network - watch if they go down so
+    does your site-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+</head>
+<body data-ng-app>
+    <form data-ng-submit="submit()" data-ng-controller="createUserCtrl">
+        <p>First Name: <input data-ng-model="fldFName" /></p>
+        <p>Last Name: <input data-ng-model="fldLName" /></p>
+        <p>Display: <input data-ng-model="fldDisplayName" /></p>
+        <p>CIty: <input data-ng-model="fldCity" /></p>
+        <p>State: <input data-ng-model="fldStateProvince" /></p>
+        <p>Country: <input data-ng-model="fldCountry" /></p>
+        <p>Email: <input data-ng-model="fldUserEmail" /></p>
+        <!--<p>Gender: <input data-ng-model="Gender" /></p>-->
+        <!--<p>JoinDate: <input data-ng-model="JoinDate" /></p>-->
+        <!--<p>IsActive: <input data-ng-model="IsActive" /></p>-->
+
+
+        <p><input type="submit" id="submit" value="Submit" /></p>
+        <p>Username: {{ response }}</p>
+    </form>
+</body>
+<script>
+    function createUserCtrl($scope) {
+        $scope.submit = function () {
+            //Make sure to change the host and port to match the URL
+            var query = "http://localhost:3717/RESTService.svc/CreateUser";
+            var CCtblUser = {
+                fldFName: $scope.fldFName,
+                fldLName: $scope.fldLName,
+                fldDisplayName: $scope.fldDisplayName,
+                fldStateProvince: $scope.fldStateProvince,
+                fldUserEmail: $scope.fldUserEmail,
+                fldCountry: $scope.fldCountry,
+                fldCity: $scope.fldCity,
+                //fldJoinDate: $scope.JoinDate,
+                //fldGender: $scope.Gender,
+                //fldIsActive: $scope.IsActive
+
+            };
+            $.ajax({
+                url: query,
+                contentType: "application/json; charset=utf-8",
+                crossDomain: true,
+                data: JSON.stringify(CCtblUser),
+                dataType: 'json',
+                processData: true,
+                type: 'POST'
+            })
+            .done(function (json) {
+                $scope.response = json;
+                $scope.$apply();
+            })
+            .fail(function () {
+                alert("Error");
+            });
+        }
+    }
+</script>
+</html>

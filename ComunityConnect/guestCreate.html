@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular Rest Create</title>
+    <!--Using a content delivery network - watch if they go down so does your site-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+</head>
+<body data-ng-app>
+    <form data-ng-submit="submit()" data-ng-controller="guestCreateCntrl">
+        <p> EventID: <input data-ng-model="fldEventNoFK" /></p>
+        <p>UserID: <input data-ng-model="fldUserNoFK" /></p>
+    
+        <p><input type="submit" id="submit" value="Submit" /></p>
+       Response: {{response}}
+    </form>
+   
+</body>
+<script>
+    function guestCreateCntrl($scope) {
+        $scope.submit = function () {
+            //Make sure to change the host and port to match the URL
+            var query = "http://localhost:3717/RESTService.svc/CreateGuest";
+            var CCtblGuestLookUp = {
+              
+                fldEventNoFK: $scope.fldEventNoFK,
+                fldUserNoFK: $scope.fldUserNoFK
+                
+            };
+            $.ajax({
+                url: query,
+                contentType: "application/json; charset=utf-8",
+                crossDomain: true,
+                data: JSON.stringify(CCtblGuestLookUp),
+                dataType: 'json',
+                processData: true,
+                type: 'POST'
+            })
+            .done(function (json) {
+                $scope.response = json;
+                $scope.$apply();
+            })
+            .fail(function () {
+                alert("Error");
+            });
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ist420grp7Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CCtblEvent">
+          <Key>
+            <PropertyRef Name="fldEventNo" />
+          </Key>
+          <Property Name="fldEventNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fldEventName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fldEventLocation" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fldEventStart" Type="datetime" Nullable="false" />
+          <Property Name="fldEventEnd" Type="datetime" Nullable="false" />
+          <Property Name="fldEventDescription" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="fldEventCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fldTicketed" Type="bit" Nullable="false" />
+          <Property Name="fldTicketPrice" Type="money" Nullable="false" />
+          <Property Name="fldRsvpNo" Type="int" />
+          <Property Name="fldMaxAttendees" Type="int" Nullable="false" />
+          <Property Name="fldEventSubmitDate" Type="datetime" Nullable="false" />
+          <Property Name="fldEventPostDate" Type="datetime" Nullable="false" />
+          <Property Name="fldEventAvgReviewScore" Type="int" />
+          <Property Name="fldAttendeeNo" Type="int" />
+          <Property Name="fldIsActive" Type="bit" />
+          <Property Name="fldHostNoFK" Type="int" />
+        </EntityType>
+        <EntityType Name="CCtblGuestLookUp">
+          <Key>
+            <PropertyRef Name="fldEntryNo" />
+          </Key>
+          <Property Name="fldEntryNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fldEntryDateTime" Type="datetime" />
+          <Property Name="fldEventNoFK" Type="int" Nullable="false" />
+          <Property Name="fldUserNoFK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CCtblUser">
+          <Key>
+            <PropertyRef Name="fldUserNo" />
+          </Key>
+          <Property Name="fldUserNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fldDisplayName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fldFName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fldLName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fldGender" Type="bit" />
+          <Property Name="fldCity" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fldStateProvince" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fldCountry" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fldUserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fldJoinDate" Type="datetime" />
+          <Property Name="fldNoEventsAttended" Type="int" />
+          <Property Name="fldIsActive" Type="bit" />
+        </EntityType>
+        <EntityContainer Name="ist420grp7ModelStoreContainer">
+          <EntitySet Name="CCtblEvent" EntityType="Self.CCtblEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCtblGuestLookUp" EntityType="Self.CCtblGuestLookUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCtblUser" EntityType="Self.CCtblUser" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ist420grp7Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ist420grp7Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CCtblEvents" EntityType="ist420grp7Model.CCtblEvent" />
+          <EntitySet Name="CCtblGuestLookUps" EntityType="ist420grp7Model.CCtblGuestLookUp" />
+          <EntitySet Name="CCtblUsers" EntityType="ist420grp7Model.CCtblUser" />
+        </EntityContainer>
+        <EntityType Name="CCtblEvent">
+          <Key>
+            <PropertyRef Name="fldEventNo" />
+          </Key>
+          <Property Name="fldEventNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fldEventName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fldEventLocation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fldEventStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fldEventEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fldEventDescription" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="fldEventCategory" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fldTicketed" Type="Boolean" Nullable="false" />
+          <Property Name="fldTicketPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="fldRsvpNo" Type="Int32" />
+          <Property Name="fldMaxAttendees" Type="Int32" Nullable="false" />
+          <Property Name="fldEventSubmitDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fldEventPostDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fldEventAvgReviewScore" Type="Int32" />
+          <Property Name="fldAttendeeNo" Type="Int32" />
+          <Property Name="fldIsActive" Type="Boolean" />
+          <Property Name="fldHostNoFK" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CCtblGuestLookUp">
+          <Key>
+            <PropertyRef Name="fldEntryNo" />
+          </Key>
+          <Property Name="fldEntryNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fldEntryDateTime" Type="DateTime" Precision="3" />
+          <Property Name="fldEventNoFK" Type="Int32" Nullable="false" />
+          <Property Name="fldUserNoFK" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CCtblUser">
+          <Key>
+            <PropertyRef Name="fldUserNo" />
+          </Key>
+          <Property Name="fldUserNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fldDisplayName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fldFName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fldLName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fldGender" Type="Boolean" />
+          <Property Name="fldCity" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fldStateProvince" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fldCountry" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fldUserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fldJoinDate" Type="DateTime" Precision="3" />
+          <Property Name="fldNoEventsAttended" Type="Int32" />
+          <Property Name="fldIsActive" Type="Boolean" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ist420grp7ModelStoreContainer" CdmEntityContainer="ist420grp7Entities">
+          <EntitySetMapping Name="CCtblEvents">
+            <EntityTypeMapping TypeName="ist420grp7Model.CCtblEvent">
+              <MappingFragment StoreEntitySet="CCtblEvent">
+                <ScalarProperty Name="fldHostNoFK" ColumnName="fldHostNoFK" />
+                <ScalarProperty Name="fldIsActive" ColumnName="fldIsActive" />
+                <ScalarProperty Name="fldAttendeeNo" ColumnName="fldAttendeeNo" />
+                <ScalarProperty Name="fldEventAvgReviewScore" ColumnName="fldEventAvgReviewScore" />
+                <ScalarProperty Name="fldEventPostDate" ColumnName="fldEventPostDate" />
+                <ScalarProperty Name="fldEventSubmitDate" ColumnName="fldEventSubmitDate" />
+                <ScalarProperty Name="fldMaxAttendees" ColumnName="fldMaxAttendees" />
+                <ScalarProperty Name="fldRsvpNo" ColumnName="fldRsvpNo" />
+                <ScalarProperty Name="fldTicketPrice" ColumnName="fldTicketPrice" />
+                <ScalarProperty Name="fldTicketed" ColumnName="fldTicketed" />
+                <ScalarProperty Name="fldEventCategory" ColumnName="fldEventCategory" />
+                <ScalarProperty Name="fldEventDescription" ColumnName="fldEventDescription" />
+                <ScalarProperty Name="fldEventEnd" ColumnName="fldEventEnd" />
+                <ScalarProperty Name="fldEventStart" ColumnName="fldEventStart" />
+                <ScalarProperty Name="fldEventLocation" ColumnName="fldEventLocation" />
+                <ScalarProperty Name="fldEventName" ColumnName="fldEventName" />
+                <ScalarProperty Name="fldEventNo" ColumnName="fldEventNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CCtblGuestLookUps">
+            <EntityTypeMapping TypeName="ist420grp7Model.CCtblGuestLookUp">
+              <MappingFragment StoreEntitySet="CCtblGuestLookUp">
+                <ScalarProperty Name="fldUserNoFK" ColumnName="fldUserNoFK" />
+                <ScalarProperty Name="fldEventNoFK" ColumnName="fldEventNoFK" />
+                <ScalarProperty Name="fldEntryDateTime" ColumnName="fldEntryDateTime" />
+                <ScalarProperty Name="fldEntryNo" ColumnName="fldEntryNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CCtblUsers">
+            <EntityTypeMapping TypeName="ist420grp7Model.CCtblUser">
+              <MappingFragment StoreEntitySet="CCtblUser">
+                <ScalarProperty Name="fldIsActive" ColumnName="fldIsActive" />
+                <ScalarProperty Name="fldNoEventsAttended" ColumnName="fldNoEventsAttended" />
+                <ScalarProperty Name="fldJoinDate" ColumnName="fldJoinDate" />
+                <ScalarProperty Name="fldUserEmail" ColumnName="fldUserEmail" />
+                <ScalarProperty Name="fldCountry" ColumnName="fldCountry" />
+                <ScalarProperty Name="fldStateProvince" ColumnName="fldStateProvince" />
+                <ScalarProperty Name="fldCity" ColumnName="fldCity" />
+                <ScalarProperty Name="fldGender" ColumnName="fldGender" />
+                <ScalarProperty Name="fldLName" ColumnName="fldLName" />
+                <ScalarProperty Name="fldFName" ColumnName="fldFName" />
+                <ScalarProperty Name="fldDisplayName" ColumnName="fldDisplayName" />
+                <ScalarProperty Name="fldUserNo" ColumnName="fldUserNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
